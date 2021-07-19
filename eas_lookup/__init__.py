@@ -3,22 +3,14 @@ import os
 import json
 import logging
 import requests
-
 import azure.functions as func
+from shared_code.common import func_json_response
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     """ main function for eas/lookup """
 
     logging.info('EAS Lookup processed a request.')
 
-    # name = req.params.get('name')
-    # if not name:
-    #     try:
-    #         req_body = req.get_json()
-    #     except ValueError:
-    #         pass
-    #     else:
-    #         name = req_body.get('name')
     try:
         params  = req.params.copy()
         if params['search'] :
@@ -32,9 +24,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             params=params,
             headers={'X-App-Token': os.getenv('EAS_APP_TOKEN')}
         )
-        json_data = json.loads(response.text)
-
-        func_response = json.dumps(json_data)
 
         headers = {
             "Cache-Control": "s-maxage=1, stale-while-revalidate, max-age={}"\
@@ -42,12 +31,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             "Access-Control-Allow-Origin": "*"
         }
 
-        return func.HttpResponse(
-            func_response,
-            status_code=200,
-            mimetype="application/json",
-            headers=headers
-        )
+        return func_json_response(func, response, headers)
+
     #pylint: disable=broad-except
     except Exception as err:
         logging.error("EAS Lookup error occurred: %s", err)
