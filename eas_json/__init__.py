@@ -28,10 +28,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         json_data = json.loads(response.text)
 
         func_response = json.dumps(json_data)
+
+        headers = {
+            "Access-Control-Allow-Origin": "*"
+        }
         return func.HttpResponse(
             func_response,
             status_code=200,
-            mimetype="application/json"
+            mimetype="application/json",
+            headers=headers
         )
     #pylint: disable=broad-except
     except Exception as err:

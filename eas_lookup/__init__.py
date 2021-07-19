@@ -38,7 +38,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         headers = {
             "Cache-Control": "s-maxage=1, stale-while-revalidate, max-age={}"\
-                .format(os.getenv('EAS_CACHE_MAX_AGE'))
+                .format(os.getenv('EAS_CACHE_MAX_AGE')),
+            "Access-Control-Allow-Origin": "*"
         }
 
         return func.HttpResponse(
