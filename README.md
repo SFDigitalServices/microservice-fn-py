@@ -33,6 +33,12 @@ $ curl https://<host>/api/eas/json?$select=address,address_number,address_number
 
 
 ## Development notes
+
+### Deployment 
+#### :warning: [Linux Consumption] Successful slot swaps automatically reverted after a few minutes :warning:
+DO NOT USE "SWAP" option until [issue](https://github.com/Azure/azure-functions-host/issues/7336) is resolved.   
+see more at: https://github.com/Azure/azure-functions-host/issues/7336
+
 ### Quickstart Guide
 [Create a function in Azure with Python using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python)
 [Create a Python function in Azure from the command line](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python)
