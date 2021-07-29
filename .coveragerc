@@ -1,0 +1,5 @@
+[run]
+source =
+    eas_json
+    eas_lookup
+    shared_code
