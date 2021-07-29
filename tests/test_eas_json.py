@@ -14,8 +14,11 @@ def test_eas_json_function():
 
     # Call the function.
     resp = main(req)
-
+    # print response body
+    print(resp.get_body)
+    # loads response body as json
     resp_json = json.loads(resp.get_body())
+
     # Check the output.
     assert resp_json['status'] == 'success'
     assert len(resp_json['data']['items']) > 0
