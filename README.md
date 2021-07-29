@@ -1,4 +1,4 @@
-# address-microservice-fn-js
+# address-microservice-fn-js [![CircleCI](https://badgen.net/circleci/github/SFDigitalServices/address-microservice-fn-py/main)](https://circleci.com/gh/SFDigitalServices/address-microservice-fn-py) [![Coverage Status](https://coveralls.io/repos/github/SFDigitalServices/address-microservice-fn-py/badge.svg?branch=main)](https://coveralls.io/github/SFDigitalServices/address-microservice-fn-py?branch=main)
 This microservice to transform address data for [form.io](https://form.io) components with [URL Data Source](https://help.form.io/userguide/form-components/#url)
 
 ## `api/eas/lookup`
@@ -8,8 +8,6 @@ Query EAS for list of addresses via partial address string. Example to be used f
 * `search` search query to perform address lookup
 
 * additional query parameters supported by [Socrata API](https://dev.socrata.com/docs/queries/)
-
-
 
 ## `api/eas/json`
 Query and filter EAS data in JSON
@@ -32,12 +30,13 @@ $ curl https://<host>/api/eas/json?$select=address,address_number,address_number
 ```
 
 
-## Development notes
-
-### Deployment 
+## Deployment notes
 #### :warning: [Linux Consumption] Successful slot swaps automatically reverted after a few minutes :warning:
 DO NOT USE "SWAP" option until [issue](https://github.com/Azure/azure-functions-host/issues/7336) is resolved.   
 see more at: https://github.com/Azure/azure-functions-host/issues/7336
+
+
+## Development
 
 ### Quickstart Guide
 [Create a function in Azure with Python using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python)
@@ -45,7 +44,7 @@ see more at: https://github.com/Azure/azure-functions-host/issues/7336
 
 ### Environment variables
 [Documentation](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python#environment-variables)
-In Functions, `application settings`, such as service connection strings, are exposed as environment variables during execution. You can access these settings by declaring `import os` and then using, `setting = os.environ["setting-name"]`. See example of `local.settings.json` file at `local.settings.example.json`
+In Functions, `application settings`, such as service connection strings, are exposed as environment variables during execution. You can access these settings by declaring `import os` and then using, `setting = os.environ["setting-name"]`. See example of `local.settings.json` file at `local.settings.example.json`.
 
 ### Generating requirements.txt
 Currently Azure Python Functions [does not support pipenv](https://github.com/Azure/azure-functions-python-worker/issues/417). However we can run `pipenv lock --requirements` to produce a requirements file for the non-dev requirements and `pipenv lock --requirements --dev` to produce one for just the dev requirements.
@@ -63,5 +62,20 @@ pipenv lock --requirements --dev > requirements-dev.txt
 DO NOT include azure-functions-worker in requirements.txt
 The Python Worker is managed by Azure Functions platform
 Manually managing azure-functions-worker may cause unexpected issues
+
+### Testing and Code Coverage
+Code coverage command with missing statement line numbers  
+> $ pipenv run python -m pytest --cov --cov-report term-missing
+
+### Prec-commit
+Set up git hook scripts with pre-commit
+> $ pipenv run pre-commit install
+
+### Continuous integration
+* Setup `.env`
+    1. Setup environmental variables from `local.settings.json`
+* Setup coveralls.
+    1. Log into coveralls.io to obtain the coverall token for your repo.
+    2. Create an environment variable in CircleCI with the name `COVERALLS_REPO_TOKEN` and the coverall token value.
 
 

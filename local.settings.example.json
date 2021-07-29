@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "EAS_API_URL": "PUT-EAS-API-URL-HERE",
+    "EAS_APP_TOKEN": "PUT-EAS-APP-TOKEN-HERE",
+    "EAS_CACHE_MAX_AGE": "360"
+  }
+}

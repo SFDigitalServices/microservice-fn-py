@@ -1,8 +1,9 @@
 """ Common shared functions """
 import json
 import jsend
+import azure.functions as func
 
-def func_json_response(func, response, headers=None):
+def func_json_response(response, headers=None):
     """ json func_json_response """
     json_data = json.loads(response.text)
 
