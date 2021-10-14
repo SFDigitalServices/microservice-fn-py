@@ -8,6 +8,8 @@ Query http status of the serverless function.
 Example
 ```
 $ curl https://<host>/api/status/http
+
+{"status": "success", "data": {"message": "200 OK"}}
 ```
 
 ## Deployment notes
