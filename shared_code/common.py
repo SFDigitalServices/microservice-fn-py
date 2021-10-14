@@ -3,12 +3,12 @@ import json
 import jsend
 import azure.functions as func
 
-def func_json_response(response, headers=None):
+def func_json_response(response, headers=None, json_root="items"):
     """ json func_json_response """
     json_data = json.loads(response.text)
 
     if response.status_code == 200:
-        func_response = json.dumps(jsend.success({"items": json_data}))
+        func_response = json.dumps(jsend.success({json_root: json_data}))
     else:
         func_response = json.dumps(json_data)
 

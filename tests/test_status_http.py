@@ -1,16 +1,16 @@
-""" Test for eas/json endpoint """
+""" Test for status/http endpoint """
 import json
 from unittest.mock import patch
 import azure.functions as func
-from eas_json import main
+from status_http import main
 
-def test_eas_json_function():
-    """ test_eas_json_function """
+def test_status_http_function():
+    """ test_status_http_function """
     # Construct a mock HTTP request.
     req = func.HttpRequest(
         method='GET',
         body=None,
-        url='/api/eas/json')
+        url='/api/status/http')
 
     # Call the function.
     resp = main(req)
@@ -21,37 +21,36 @@ def test_eas_json_function():
 
     # Check the output.
     assert resp_json['status'] == 'success'
-    assert len(resp_json['data']['items']) > 0
 
-def test_eas_json_function_request_error():
-    """ test_eas_json_function_func_error """
+
+def test_status_http_function_other():
+    """ test_status_http_function_other """
     # Construct a mock HTTP request.
     req = func.HttpRequest(
-        method='GET',
-        body=None,
-        url='/api/eas/json',
-        params={'hello': 'world'})
+        method='POST',
+        body="TEST",
+        url='/api/status/http')
 
     # Call the function.
     resp = main(req)
 
-    resp_json = json.loads(resp.get_body())
-    print(resp_json)
-    # Check the output.
-    assert resp_json['error']
+    assert resp.status_code == 202
 
-def test_eas_json_function_url_error():
-    """ test_eas_json_function_url_error """
-    # Construct a mock HTTP request.
-    with patch.dict("os.environ", {"EAS_API_URL": "", "EAS_APP_TOKEN": ""}):
+def test_status_http_function_request_error():
+    """ test_status_http_function error """
+
+    with patch('status_http.func_json_response') as mock:
+        mock.side_effect = ValueError('ERROR_TEST')
+        # Construct a mock HTTP request.
         req = func.HttpRequest(
             method='GET',
             body=None,
-            url='/api/eas/json')
+            url='/api/status/http')
 
         # Call the function.
         resp = main(req)
 
         resp_json = json.loads(resp.get_body())
+        print(resp_json)
         # Check the output.
         assert resp_json['status'] == 'error'

@@ -6,9 +6,10 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "eas/json",
+      "route": "status/http",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
     },
     {

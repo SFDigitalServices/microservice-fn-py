@@ -1,34 +1,14 @@
-# address-microservice-fn-js [![CircleCI](https://badgen.net/circleci/github/SFDigitalServices/address-microservice-fn-py/main)](https://circleci.com/gh/SFDigitalServices/address-microservice-fn-py) [![Coverage Status](https://coveralls.io/repos/github/SFDigitalServices/address-microservice-fn-py/badge.svg?branch=main)](https://coveralls.io/github/SFDigitalServices/address-microservice-fn-py?branch=main)
-This microservice to transform address data for [form.io](https://form.io) components with [URL Data Source](https://help.form.io/userguide/form-components/#url)
+# microservice-fn-py [![CircleCI](https://badgen.net/circleci/github/SFDigitalServices/microservice-fn-py/main)](https://circleci.com/gh/SFDigitalServices/microservice-fn-py) [![Coverage Status](https://coveralls.io/repos/github/SFDigitalServices/microservice-fn-py/badge.svg?branch=main)](https://coveralls.io/github/SFDigitalServices/microservice-fn-py?branch=main)
+Azure serverless python function microservice template
 
-## `api/eas/lookup`
-Query EAS for list of addresses via partial address string. Example to be used for autocomplete.
+## `api/status/http`
+Query http status of the serverless function.
 
-### Query string parameters
-* `search` search query to perform address lookup
-
-* additional query parameters supported by [Socrata API](https://dev.socrata.com/docs/queries/)
-
-## `api/eas/json`
-Query and filter EAS data in JSON
-### [Simple Filtering](https://dev.socrata.com/docs/filtering.html)
-
-Example filter by `address`
+### Query
+Example
 ```
-$ curl https://<host>/api/eas/json?address=200%20MAIN%20ST
+$ curl https://<host>/api/status/http
 ```
-Example filter by `address`, `block`, and `lot`
-```
-$ curl https://<host>/api/eas/json?address=200%20MAIN%20ST&block=3739&lot=008
-```
-
-### [Queries](https://dev.socrata.com/docs/queries/)
-
-Example query `address_number`, `address_number_suffix`, `street_name`, `street_type`, and `unit_number` with `address`, `block`, and `lot`
-```
-$ curl https://<host>/api/eas/json?$select=address,address_number,address_number_suffix,street_name,street_type,unit_number,block,lot,parcel_number&$where=address=%2777%20VAN%20NESS%20AVE%20%23100%27%20AND%20block%20=%270834%27%20AND%20lot=%27144%27
-```
-
 
 ## Deployment notes
 #### :warning: [Linux Consumption] Successful slot swaps automatically reverted after a few minutes :warning:
@@ -38,8 +18,24 @@ see more at: https://github.com/Azure/azure-functions-host/issues/7336
 
 ## Development
 
-### Quickstart Guide
-[Create a function in Azure with Python using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python)
+### Get started
+
+Install Pipenv (if needed)
+> $ pip install --user pipenv
+
+Install included packages
+> $ pipenv install
+
+Output virtualenv information
+> $ pipenv --venv
+
+
+
+
+
+
+### Quickstart Reference Guide
+[Create a function in Azure with Python using Visual Studio Code](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-python)  
 [Create a Python function in Azure from the command line](https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-python)
 
 ### Environment variables
@@ -77,5 +73,34 @@ Set up git hook scripts with pre-commit
 * Setup coveralls.
     1. Log into coveralls.io to obtain the coverall token for your repo.
     2. Create an environment variable in CircleCI with the name `COVERALLS_REPO_TOKEN` and the coverall token value.
+
+## How to fork in own repo (SFDigitalServices use only)
+reference: [How to fork your own repo in Github](http://kroltech.com/2014/01/01/quick-tip-how-to-fork-your-own-repo-in-github/)
+
+### Create a new blank repo
+First, create a new blank repo that you want to ultimately be a fork of your existing repo. We will call this new repo "my-awesome-microservice-py".
+
+### Clone that new repo on your local machine
+Next, make a clone of that new blank repo on your machine:
+> $ git clone https://github.com/SFDigitalServices/my-awesome-microservice-fn-py.git
+
+### Add an upstream remote to your original repo
+While this technically isn’t forking, its basically the same thing. What you want to do is add a remote upstream to this new empty repo that points to your original repo you want to fork:
+> $ git remote add upstream https://github.com/SFDigitalServices/microservice-fn-py.git
+
+### Pull down a copy of the original repo to your new repo
+The last step is to pull down a complete copy of the original repo:
+> $ git fetch upstream
+
+> $ git merge upstream/main
+
+Or, an easier way:
+> $ git pull upstream main
+
+Now, you can work on your new repo to your hearts content. If any changes are made to the original repo, simply execute a `git pull upstream main` and your new repo will receive the updates that were made to the original!
+
+Psst: Don't forget to upload the fresh copy of your new repo back up to git:
+
+> $ git push origin main
 
 
